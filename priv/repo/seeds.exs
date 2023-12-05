@@ -43,4 +43,24 @@ if Mix.env() == :dev do
   SynaiPro.Orgs.create_invitation(org, %{email: normal_user.email})
 
   UserSeeder.random_users(20)
+
+  alias NimbleCSV.RFC4180, as: CSV
+
+  # Lazily parses a file stream
+  "priv/repo/blog_data_and_embeddings.csv"
+  |> File.stream!
+  |> CSV.parse_stream()
+  |> Stream.map(fn [title, content, url, tokens, embedding] ->
+    attrs = %{
+      title: title,
+      content: content,
+      url: url,
+      tokens: String.to_integer(tokens),
+      embedding: Jason.decode!(embedding)
+    }
+
+    {:ok, _} = SynaiPro.Search.create_embedding(attrs)
+  end)
+  |> Stream.run()
+
 end
