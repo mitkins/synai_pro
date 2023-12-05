@@ -74,7 +74,7 @@ defmodule PetalPro.MixProject do
       {:query_builder, "~> 1.0"},
 
       # Authentication
-      {:bcrypt_elixir, "~> 3.0"},
+      {:pbkdf2_elixir, "~> 2.0"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_google, "~> 0.10"},
       {:ueberauth_github, "~> 0.7"},
