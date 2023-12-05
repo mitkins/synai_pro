@@ -72,6 +72,7 @@ defmodule SynaiPro.MixProject do
 
       # Ecto querying / pagination
       {:query_builder, "~> 1.0"},
+      {:pgvector, "~> 0.2.0"},
 
       # Authentication
       {:pbkdf2_elixir, "~> 2.0"},

@@ -167,6 +167,8 @@ config :flop, repo: SynaiPro.Repo, default_limit: 20
 config :tesla, :adapter, {Tesla.Adapter.Finch, name: SynaiPro.Finch}
 config :petal_framework, :translation_helper_module, SynaiProWeb.PetalFrameworkTranslations
 
+config :synai_pro, SynaiPro.Repo, types: SynaiPro.PostgrexTypes
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
