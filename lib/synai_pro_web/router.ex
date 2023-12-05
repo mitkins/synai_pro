@@ -47,6 +47,13 @@ defmodule SynaiProWeb.Router do
 
     live_session :public, layout: {SynaiProWeb.Layouts, :public} do
       # Add public live routes here
+
+      live "/embeddings", EmbeddingLive.Index, :index
+      live "/embeddings/new", EmbeddingLive.Index, :new
+      live "/embeddings/:id/edit", EmbeddingLive.Index, :edit
+
+      live "/embeddings/:id", EmbeddingLive.Show, :show
+      live "/embeddings/:id/show/edit", EmbeddingLive.Show, :edit
     end
   end
 

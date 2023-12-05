@@ -1,0 +1,57 @@
+<.container class="py-16">
+  <.page_header title="Listing Embeddings">
+    <.button link_type="live_patch" label="New Embedding" to={~p"/embeddings/new"} />
+  </.page_header>
+
+  <%= if @live_action in [:new, :edit] do %>
+    <.modal title={@page_title}>
+      <.live_component
+        module={SynaiProWeb.EmbeddingLive.FormComponent}
+        id={@embedding.id || :new}
+        action={@live_action}
+        embedding={@embedding}
+        return_to={current_index_path(@index_params)}
+      />
+    </.modal>
+  <% end %>
+
+  <.data_table :if={@index_params} meta={@meta} items={@embeddings}>
+    <:if_empty>No embeddings found</:if_empty>
+    <:col field={:title} sortable />
+    <:col field={:url} sortable />
+    <:col field={:content} sortable />
+    <:col field={:tokens} sortable />
+    <:col field={:embedding} sortable />
+    <:col label="Actions" :let={embedding} align_right>
+      <.button
+        color="primary"
+        variant="outline"
+        size="xs"
+        link_type="live_redirect"
+        label="Show"
+        to={~p"/embeddings/#{embedding}"}
+      />
+
+      <.button
+        color="white"
+        variant="outline"
+        size="xs"
+        link_type="live_patch"
+        label="Edit"
+        to={~p"/embeddings/#{embedding}/edit"}
+      />
+
+      <.button
+        color="danger"
+        variant="outline"
+        link_type="a"
+        to="#"
+        size="xs"
+        label="Delete"
+        phx-click="delete"
+        phx-value-id={embedding.id}
+        data-confirm="Are you sure?"
+      />
+    </:col>
+  </.data_table>
+</.container>
