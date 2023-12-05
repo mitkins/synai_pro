@@ -1,4 +1,4 @@
-defmodule PetalPro.Repo.Migrations.CreateOrgsInvitations do
+defmodule SynaiPro.Repo.Migrations.CreateOrgsInvitations do
   use Ecto.Migration
 
   def change do

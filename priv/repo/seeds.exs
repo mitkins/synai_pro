@@ -5,29 +5,29 @@
 # Inside the script, you can read and write to any of your
 # repositories directly:
 #
-#     PetalPro.Repo.insert!(%PetalPro.SomeSchema{})
+#     SynaiPro.Repo.insert!(%SynaiPro.SomeSchema{})
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-alias PetalPro.Accounts.User
-alias PetalPro.Accounts.UserSeeder
-alias PetalPro.Accounts.UserToken
-alias PetalPro.Accounts.UserTOTP
-alias PetalPro.Logs.Log
-alias PetalPro.Orgs.Org
-alias PetalPro.Orgs.OrgSeeder
+alias SynaiPro.Accounts.User
+alias SynaiPro.Accounts.UserSeeder
+alias SynaiPro.Accounts.UserToken
+alias SynaiPro.Accounts.UserTOTP
+alias SynaiPro.Logs.Log
+alias SynaiPro.Orgs.Org
+alias SynaiPro.Orgs.OrgSeeder
 
-alias PetalPro.Orgs.Invitation
-alias PetalPro.Orgs.Membership
+alias SynaiPro.Orgs.Invitation
+alias SynaiPro.Orgs.Membership
 
 if Mix.env() == :dev do
-  PetalPro.Repo.delete_all(Log)
-  PetalPro.Repo.delete_all(UserTOTP)
-  PetalPro.Repo.delete_all(Invitation)
-  PetalPro.Repo.delete_all(Membership)
-  PetalPro.Repo.delete_all(Org)
-  PetalPro.Repo.delete_all(UserToken)
-  PetalPro.Repo.delete_all(User)
+  SynaiPro.Repo.delete_all(Log)
+  SynaiPro.Repo.delete_all(UserTOTP)
+  SynaiPro.Repo.delete_all(Invitation)
+  SynaiPro.Repo.delete_all(Membership)
+  SynaiPro.Repo.delete_all(Org)
+  SynaiPro.Repo.delete_all(UserToken)
+  SynaiPro.Repo.delete_all(User)
 
   admin = UserSeeder.admin()
 
@@ -40,7 +40,7 @@ if Mix.env() == :dev do
     })
 
   org = OrgSeeder.random_org(admin)
-  PetalPro.Orgs.create_invitation(org, %{email: normal_user.email})
+  SynaiPro.Orgs.create_invitation(org, %{email: normal_user.email})
 
   UserSeeder.random_users(20)
 end

@@ -1,4 +1,4 @@
-defmodule PetalPro.Repo.Migrations.CreateLogs do
+defmodule SynaiPro.Repo.Migrations.CreateLogs do
   use Ecto.Migration
 
   def change do

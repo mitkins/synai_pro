@@ -1,4 +1,4 @@
-defmodule PetalPro.Repo.Migrations.CreateUsersAuthTables do
+defmodule SynaiPro.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

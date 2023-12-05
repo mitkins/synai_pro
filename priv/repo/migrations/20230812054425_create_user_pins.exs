@@ -1,4 +1,4 @@
-defmodule PetalPro.Repo.Migrations.CreateUserPins do
+defmodule SynaiPro.Repo.Migrations.CreateUserPins do
   use Ecto.Migration
 
   def change do

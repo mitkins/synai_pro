@@ -9,6 +9,6 @@
   threshold: "medium",
   ignore: ["Config.HTTPS"],
   ignore_files: [
-    "lib/petal_pro_web/controllers/email_testing_controller.ex"
+    "lib/synai_pro_web/controllers/email_testing_controller.ex"
   ]
 ]

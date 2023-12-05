@@ -19,7 +19,7 @@ import Config
 #   - twitter_url: (deletable) The URL to your Twitter account (used in the landing page footer)
 #   - github_url: (deletable) The URL to your Github account (used in the landing page footer)
 #   - discord_url: (deletable) The URL to your Discord invititation (used in the landing page footer)
-config :petal_pro,
+config :synai_pro,
   app_name: "Petal",
   business_name: "Petal Pty Ltd",
   support_email: "support@example.com",
@@ -34,20 +34,20 @@ config :petal_pro,
 
 # Petal Pro features:
 #   - impersonation_enabled?: Allows admins to impersonate users
-config :petal_pro,
+config :synai_pro,
   impersonation_enabled?: true
 
-config :petal_pro,
-  ecto_repos: [PetalPro.Repo]
+config :synai_pro,
+  ecto_repos: [SynaiPro.Repo]
 
 # Configures the endpoint
-config :petal_pro, PetalProWeb.Endpoint,
+config :synai_pro, SynaiProWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: PetalProWeb.ErrorHTML, json: PetalProWeb.ErrorJSON],
+    formats: [html: SynaiProWeb.ErrorHTML, json: SynaiProWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: PetalPro.PubSub,
+  pubsub_server: SynaiPro.PubSub,
   live_view: [signing_salt: "Fd8SWPu3"]
 
 # Configures the mailer
@@ -57,7 +57,7 @@ config :petal_pro, PetalProWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :petal_pro, PetalPro.Mailer, adapter: Swoosh.Adapters.Local
+config :synai_pro, SynaiPro.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -79,7 +79,7 @@ config :phoenix, :json_library, Jason
 
 config :petal_components,
        :error_translator_function,
-       {PetalProWeb.CoreComponents, :translate_error}
+       {SynaiProWeb.CoreComponents, :translate_error}
 
 config :tailwind,
   version: "3.3.2",
@@ -97,14 +97,14 @@ config :tailwind,
 # The following configuration would start four queues with concurrency ranging from 5 to 50: [default: 10, mailers: 20, events: 50, media: 5]
 # For now we just have one default queue with up to 5 concurrent jobs (as our database only accepts up to 10 connections so we don't want to overload it)
 # Oban provides active pruning of completed, cancelled and discarded jobs - we retain jobs for 24 hours
-config :petal_pro, Oban,
-  repo: PetalPro.Repo,
+config :synai_pro, Oban,
+  repo: SynaiPro.Repo,
   queues: [default: 5],
   plugins: [
     {Oban.Plugins.Pruner, max_age: 3600 * 24},
     {Oban.Plugins.Cron,
      crontab: [
-       # {"@daily", PetalPro.Workers.ExampleWorker}
+       # {"@daily", SynaiPro.Workers.ExampleWorker}
        # {"* * * * *", EveryMinuteWorker},
        # {"0 * * * *", EveryHourWorker},
        # {"0 */6 * * *", EverySixHoursWorker},
@@ -116,9 +116,9 @@ config :petal_pro, Oban,
 # Specify which languages you support
 # To create .po files for a language run `mix gettext.merge priv/gettext --locale fr`
 # (fr is France, change to whatever language you want - make sure it's included in the locales config below)
-config :petal_pro, PetalProWeb.Gettext, allowed_locales: ~w(en fr)
+config :synai_pro, SynaiProWeb.Gettext, allowed_locales: ~w(en fr)
 
-config :petal_pro, :language_options, [
+config :synai_pro, :language_options, [
   %{locale: "en", flag: "🇬🇧", label: "English"},
   %{locale: "fr", flag: "🇫🇷", label: "French"}
 ]
@@ -137,14 +137,14 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
     "user-agent": "MyGithubUsername"
   ]
 
-config :petal_pro, :passwordless_enabled, true
+config :synai_pro, :passwordless_enabled, true
 
 # Reduce XSS risks by declaring which dynamic resources are allowed to load
 # If you use any CDNs, whitelist them here.
 # Policy struct: https://github.com/mbramson/content_security_policy/blob/master/lib/content_security_policy/policy.ex
 # Read more about the options: https://content-security-policy.com
 # Note that we use unsafe-eval because Alpine JS requires it :( (see https://alpinejs.dev/advanced/csp)
-config :petal_pro, :content_security_policy, %{
+config :synai_pro, :content_security_policy, %{
   default_src: [
     "'unsafe-inline'",
     "'unsafe-eval'",
@@ -163,9 +163,9 @@ config :petal_pro, :content_security_policy, %{
   ]
 }
 
-config :flop, repo: PetalPro.Repo, default_limit: 20
-config :tesla, :adapter, {Tesla.Adapter.Finch, name: PetalPro.Finch}
-config :petal_framework, :translation_helper_module, PetalProWeb.PetalFrameworkTranslations
+config :flop, repo: SynaiPro.Repo, default_limit: 20
+config :tesla, :adapter, {Tesla.Adapter.Finch, name: SynaiPro.Finch}
+config :petal_framework, :translation_helper_module, SynaiProWeb.PetalFrameworkTranslations
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

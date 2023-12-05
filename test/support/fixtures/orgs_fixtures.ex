@@ -1,8 +1,8 @@
-defmodule PetalPro.OrgsFixtures do
-  alias PetalPro.Accounts.User
-  alias PetalPro.AccountsFixtures
-  alias PetalPro.Orgs
-  alias PetalPro.Orgs.Membership
+defmodule SynaiPro.OrgsFixtures do
+  alias SynaiPro.Accounts.User
+  alias SynaiPro.AccountsFixtures
+  alias SynaiPro.Orgs
+  alias SynaiPro.Orgs.Membership
 
   def unique_org_name(), do: "org#{System.unique_integer([:positive])}"
   def unique_invitation_email(), do: "invitation#{System.unique_integer([:positive])}@example.com"
@@ -20,7 +20,7 @@ defmodule PetalPro.OrgsFixtures do
   end
 
   def membership_fixture(org, user, role \\ :member) do
-    PetalPro.Repo.insert!(Membership.insert_changeset(org, user, role))
+    SynaiPro.Repo.insert!(Membership.insert_changeset(org, user, role))
   end
 
   def org_member_fixture(org, user_attrs \\ %{}) do

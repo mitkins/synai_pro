@@ -1,4 +1,4 @@
-defmodule PetalPro.Repo.Migrations.AddFieldsToUser do
+defmodule SynaiPro.Repo.Migrations.AddFieldsToUser do
   use Ecto.Migration
 
   def change do

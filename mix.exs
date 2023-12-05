@@ -1,11 +1,11 @@
-defmodule PetalPro.MixProject do
+defmodule SynaiPro.MixProject do
   use Mix.Project
 
   @version "1.6.2"
 
   def project do
     [
-      app: :petal_pro,
+      app: :synai_pro,
       version: @version,
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -29,7 +29,7 @@ defmodule PetalPro.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {PetalPro.Application, []},
+      mod: {SynaiPro.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

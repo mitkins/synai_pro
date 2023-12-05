@@ -1,4 +1,4 @@
-defmodule PetalProWeb.ConnCase do
+defmodule SynaiProWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule PetalProWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use PetalProWeb.ConnCase, async: true`, although
+  by setting `use SynaiProWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,20 +21,20 @@ defmodule PetalProWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint PetalProWeb.Endpoint
+      @endpoint SynaiProWeb.Endpoint
 
-      use PetalProWeb, :verified_routes
+      use SynaiProWeb, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import PetalProWeb.ConnCase
+      import SynaiProWeb.ConnCase
       import Swoosh.TestAssertions
     end
   end
 
   setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(PetalPro.Repo, shared: not tags[:async])
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(SynaiPro.Repo, shared: not tags[:async])
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
@@ -48,9 +48,9 @@ defmodule PetalProWeb.ConnCase do
   test context.
   """
   def register_and_sign_in_user(%{conn: conn}) do
-    user = PetalPro.AccountsFixtures.confirmed_user_fixture(%{is_onboarded: true})
-    org = PetalPro.OrgsFixtures.org_fixture(user)
-    membership = PetalPro.Orgs.get_membership!(user, org.slug)
+    user = SynaiPro.AccountsFixtures.confirmed_user_fixture(%{is_onboarded: true})
+    org = SynaiPro.OrgsFixtures.org_fixture(user)
+    membership = SynaiPro.Orgs.get_membership!(user, org.slug)
     %{conn: log_in_user(conn, user), user: user, org: org, membership: membership}
   end
 
@@ -59,9 +59,9 @@ defmodule PetalProWeb.ConnCase do
 
   It returns an updated `conn`.
   """
-  @spec log_in_user(Plug.Conn.t(), PetalPro.Accounts.user()) :: Plug.Conn.t()
+  @spec log_in_user(Plug.Conn.t(), SynaiPro.Accounts.user()) :: Plug.Conn.t()
   def log_in_user(conn, user) do
-    token = PetalPro.Accounts.generate_user_session_token(user)
+    token = SynaiPro.Accounts.generate_user_session_token(user)
 
     conn
     |> Phoenix.ConnTest.init_test_session(%{})
@@ -74,7 +74,7 @@ defmodule PetalProWeb.ConnCase do
   It returns an updated `conn`.
   """
   def impersonate_user(conn, impersonator_user, user) do
-    user_token = PetalPro.Accounts.generate_user_session_token(user)
+    user_token = SynaiPro.Accounts.generate_user_session_token(user)
 
     conn
     |> Phoenix.ConnTest.init_test_session(%{})
@@ -93,10 +93,10 @@ defmodule PetalProWeb.ConnCase do
 
   def assert_log(action, params \\ %{}) do
     log =
-      PetalPro.Logs.LogQuery.by_action(action)
-      |> PetalPro.Logs.LogQuery.order_by(:newest)
+      SynaiPro.Logs.LogQuery.by_action(action)
+      |> SynaiPro.Logs.LogQuery.order_by(:newest)
       |> QueryExt.limit(1)
-      |> PetalPro.Repo.one()
+      |> SynaiPro.Repo.one()
 
     assert !!log, ~s|No log found for action "#{action}"|
 

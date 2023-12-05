@@ -16,14 +16,14 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_secret: System.get_env("GITHUB_OAUTH_SECRET")
 
 # If you are using Cloudinary for file uploads:
-config :petal_pro, :cloudinary,
+config :synai_pro, :cloudinary,
   cloud_name: System.get_env("CLOUDINARY_CLOUD_NAME"),
   api_key: System.get_env("CLOUDINARY_API_KEY"),
   api_secret: System.get_env("CLOUDINARY_API_SECRET"),
   folder: System.get_env("CLOUDINARY_FOLDER")
 
 # If you are using Amazon S3 for file uploads:
-config :petal_pro, :s3,
+config :synai_pro, :s3,
   region: System.get_env("AWS_REGION"),
   access_key: System.get_env("AWS_ACCESS_KEY"),
   secret: System.get_env("AWS_SECRET"),
@@ -39,7 +39,7 @@ if config_env() == :prod do
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-  config :petal_pro, PetalPro.Repo,
+  config :synai_pro, SynaiPro.Repo,
     ssl: false,
     socket_options: maybe_ipv6,
     url: database_url,
@@ -67,7 +67,7 @@ if config_env() == :prod do
 
   port = String.to_integer(System.get_env("PORT") || "4000")
 
-  config :petal_pro, PetalProWeb.Endpoint,
+  config :synai_pro, SynaiProWeb.Endpoint,
     server: true,
     url: [host: host, port: 80],
     http: [
@@ -80,7 +80,7 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  config :petal_pro, PetalPro.Mailer,
+  config :synai_pro, SynaiPro.Mailer,
     adapter: Swoosh.Adapters.AmazonSES,
     region: System.get_env("AWS_REGION"),
     access_key: System.get_env("AWS_ACCESS_KEY"),
