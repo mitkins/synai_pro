@@ -54,6 +54,8 @@ defmodule SynaiProWeb.Router do
 
       live "/embeddings/:id", EmbeddingLive.Show, :show
       live "/embeddings/:id/show/edit", EmbeddingLive.Show, :edit
+
+      live "/recipes/open-ai/examples/open-ai-prompt", OpenAiPromptLive, :index
     end
   end
 

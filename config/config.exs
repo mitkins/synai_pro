@@ -167,7 +167,15 @@ config :flop, repo: SynaiPro.Repo, default_limit: 20
 config :tesla, :adapter, {Tesla.Adapter.Finch, name: SynaiPro.Finch}
 config :petal_framework, :translation_helper_module, SynaiProWeb.PetalFrameworkTranslations
 
-config :synai_pro, SynaiPro.Repo, types: SynaiPro.PostgrexTypes
+config :openai,
+  # Find it at https://platform.openai.com/account/api-keys
+  api_key: System.get_env("OPENAI_API_KEY"),
+  # Find it at https://platform.openai.com/account/org-settings under "Organization ID"
+  organization_key: System.get_env("OPENAI_ORGANIZATION_KEY"),
+  # You need this or else it'll likely timeout too easily
+  http_options: [recv_timeout: 30_000]
+
+  config :synai_pro, SynaiPro.Repo, types: SynaiPro.PostgrexTypes
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

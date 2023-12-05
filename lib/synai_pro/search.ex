@@ -8,7 +8,9 @@ defmodule SynaiPro.Search do
 
   alias SynaiPro.Search.Embedding
 
-  @doc """
+  import Pgvector.Ecto.Query
+
+@doc """
   Returns the list of embeddings.
 
   ## Examples
@@ -100,5 +102,9 @@ defmodule SynaiPro.Search do
   """
   def change_embedding(%Embedding{} = embedding, attrs \\ %{}) do
     Embedding.changeset(embedding, attrs)
+  end
+
+  def get_top3_similar_docs(embeddings) do
+    Repo.all(from i in Embedding, order_by: l2_distance(i.embedding, ^embeddings), limit: 3)
   end
 end

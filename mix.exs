@@ -85,6 +85,9 @@ defmodule SynaiPro.MixProject do
       {:nimble_totp, "~> 1.0.0"},
       {:eqrcode, "~> 0.1.10"},
 
+      # OpenAI
+      {:openai, "~> 0.5.2"},
+
       # Hashing
       {:hashids, "~> 2.0"},
 

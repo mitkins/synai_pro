@@ -1,0 +1,29 @@
+<.container class="my-20">
+  <.h3>ChatGPT Prompt</.h3>
+
+  <.form for={@form} phx-submit="submit">
+    <.field field={@form[:prompt]} placeholder="eg. Best life advice?" />
+
+    <div class="flex justify-end">
+      <div class="flex gap-5">
+        <img
+          :if={!@response}
+          class="h-10"
+          src="https://res.cloudinary.com/wickedsites/image/upload/v1685185610/petal_marketing/global/eric_nd7arb.png"
+        />
+        <.button color="primary" phx-disable-with="Loading...">Ask Cartman</.button>
+      </div>
+    </div>
+  </.form>
+
+  <div :if={@response} class="flex gap-5 mt-20">
+    <img
+      class="h-10"
+      src="https://res.cloudinary.com/wickedsites/image/upload/v1685185610/petal_marketing/global/eric_nd7arb.png"
+    />
+
+    <div class="p-5 text-white bg-orange-500 border-gray-200 rounded text-semibold">
+      <%= @response %>
+    </div>
+  </div>
+</.container>
