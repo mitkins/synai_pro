@@ -19,9 +19,7 @@
     <:if_empty>No embeddings found</:if_empty>
     <:col field={:title} sortable />
     <:col field={:url} sortable />
-    <:col field={:content} sortable />
     <:col field={:tokens} sortable />
-    <:col field={:embedding} sortable />
     <:col label="Actions" :let={embedding} align_right>
       <.button
         color="primary"

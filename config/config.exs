@@ -82,7 +82,7 @@ config :petal_components,
        {SynaiProWeb.CoreComponents, :translate_error}
 
 config :tailwind,
-  version: "3.3.2",
+  version: "3.3.5",
   default: [
     args: ~w(
     --config=tailwind.config.js
