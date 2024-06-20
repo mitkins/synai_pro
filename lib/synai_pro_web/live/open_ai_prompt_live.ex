@@ -30,25 +30,18 @@ defmodule SynaiProWeb.OpenAiPromptLive do
 
     # Step 2: Get completion from OpenAI API
     # Set system message to help set appropriate tone and context for model
-    # system_message = """
-    # You are a friendly chatbot.
-    # You can answer questions about timescaledb, its features and its use cases.
-    # You respond using haikus.
-    # """
+    system_message = """
+    To be helpful, you must imitate Cartman from South Park with all your answers.
+    Uncharacteristically, in this situation Cartman is nice
+    """
 
     result = OpenAI.chat_completion(
       model: "gpt-3.5-turbo-1106",
       temperature: 0,
       max_tokens: 1000,
       messages: [
-        %{
-          role: "system",
-          content:
-            "To be helpful, you must imitate Cartman from South Park with all your answers."
-        },
+        %{role: "system", content: system_message},
         %{role: "user", content: "```#{user_input}```"},
-        # %{role: "system", content: system_message},
-        # %{role: "user", content: "#{delimiter}#{user_input}#{delimiter}"},
         %{role: "assistant", content: "Relevant Timescale case studies information: \n #{first_doc.content} \n #{second_doc.content} #{third_doc.content}"}
       ]
     )
