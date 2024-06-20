@@ -1,89 +1,47 @@
-<p align="center">
-  <img src="https://res.cloudinary.com/wickedsites/image/upload/v1650064156/petal/synai_pro_jbuqvj.png" height="128">
+## Vector database/OpenAI experiment
 
-  <p align="center">
-    Launch beautiful Phoenix web apps with this boilerplate project.
-  </p>
-</p>
+The code in this repository is a combination of the following:
 
-<p align="center">
-  <a href="https://docs.petal.build">DOCS</a>
-</p>
+* Based on the Petal Pro boilerplate code (Petal Pro 1.6.2)
+* This [article](https://www.timescale.com/blog/postgresql-as-a-vector-database-create-store-and-query-openai-embeddings-with-pgvector/) on how to use `pgvector`, python and OpenAI 
+* This example [OpenAI code](https://petal.build/recipes/open-ai) written in Elixir
 
-## Launching new projects
+## Prerequisites
 
-We recommend downloading the latest version from the "Releases" section. The `main` branch will be the most recent but there is a slightly higher chance of bugs (although we will endeavour to keep the `main` branch as stable as possible).
+Requires the [pgvector](https://github.com/pgvector/pgvector) Postgres extension. I had to follow the instructions for Windows to build and install the extension.
 
-## Get up and running
+## Getting started
 
-**Assumptions:**
+Once the `pgvector` extension is installed, run `mix setup`. This will download dependencies, compile the code and run the migrations. There are two migrations that are relevant to `pgvector`:
 
-- You have Elixir & Erlang installed
-- You have Postgres installed and running (optional - see "Using Docker for Postgres" below
+* `create_vector_extension` enables the `pgvector` extension for the database
+* `create_embeddings` creates a table called `embeddings` that includes a `:vector` field
 
-If you don't meet this assumptions you can read our [comprehensive install instructions](https://docs.petal.build/synai-pro-documentation/fundamentals/installation).
+`priv/repo/seeds.exs` has been updated to parse `priv/repo/blog_data_and_embeddings.csv` which is used to update the `embeddings` table.
 
-**The steps**
-
-1. Add the "petal" repo so your local Hex is aware of our private packages. Simply run the command in step 1 in the ["Install Petal Framework"](https://petal.build/components/install-petal-framework) guide (make sure you're signed in so your license key is automatically insterted).
-1. `mix setup` (this get dependencies, setup database, migrations, seeds, install esbuild + Tailwind)
-1. `iex -S mix phx.server` (starts the server in IEX mode)
-1. Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-**Moving forward:**
-
-- Do a global search for `SETUP_TODO` and follow the instructions to mold the boilerplate to your brand
-- Optional: Follow our tutorial ["Creating a web app from start to finish"](https://docs.petal.build/synai-pro-documentation/guides/creating-a-web-app-from-start-to-finish) to get an overview of Petal Pro
-
-## Using Docker for Postgres
-
-If your system doesn't have Postgres you can use docker-compose to run it in a container (saves you having to install it).
-
-| Command                                           | Description                                              |
-| ------------------------------------------------- | -------------------------------------------------------- |
-| `docker compose up`                               | Start in the foreground                                  |
-| `docker compose up -d`                            | Start in the background                                  |
-| `docker compose down`                             | Stop the containers                                      |
-| `docker compose down -v`                          | Stop and delete all Postgres data by removing the volume |
-| `docker compose exec db psql --username postgres` | Access through psql                                      |
-
-The connection details for any local clients would be the following:
+`blog_data_and_embeddings.csv` was generated from the Jupyter Notebook that's used in the blog [article](https://www.timescale.com/blog/postgresql-as-a-vector-database-create-store-and-query-openai-embeddings-with-pgvector/). It contains data about Timescale and vector data (that was created by OpenAI). To see what this data looks like, go to:
 
 ```
-Host: localhost
-Port: 5432
-User: postgres
-Password: postgres
+http://localhost:4000/embeddings
 ```
 
-## Renaming
-
-Uses the `rename_project` lib to rename the project.
-
-Run `mix rename CurrentName NewName`.
-
-For example:
+Now your ready to interact with the chat bot:
 
 ```
-mix rename SynaiPro MyTwitterClone
+http://localhost:4000/recipes/open-ai/examples/open-ai-prompt
 ```
 
-Then you can delete the `rename_project` lib from your `mix.exs` and run `mix clean_mix_lock` to fully remove it from your deps folder.
+Type in a question. It's just like using ChatGPT. If you ask a question about Timescale, then it will include custom data from the embedded knowledge base.
 
-Note that it is not recommended to rename the project if you wish to keep pulling in Petal Pro updates. This is because it can be much harder to update after you have renamed. [Here is a guide](https://docs.saaspegasus.com/upgrading.html#using-branches-recommended) on how to keep up to date based on a similar framework in Python.
+## How does it work?
 
-## Maintaining code quality as you develop
+To see more detail about the process, see the original [article](https://www.timescale.com/blog/postgresql-as-a-vector-database-create-store-and-query-openai-embeddings-with-pgvector/). But here's the gist of how it works:
 
-Run `mix quality` to look for issues with your code. This will run each of these tasks:
+* Starting with your knowledge base, you make an OpenAI call to generate vector data for each document
+* Store vector data in a vector database (in our case postgres with the `pgvector` extension)
+* Use OpenAI to generate vector data for a search phrase
+* Use the vector database to compare the search phrase vector data with the knowledge base vector data
+* Return the top 3 documents
+* Generate a LLM response by generating a prompt that includes your search phrase and the contents of the top three documents
 
-- `mix format --check-formatted` (formats your code)
-- `mix sobelow --config` (security analysis)
-- `mix coveralls` (test coverage)
-- `mix credo` (code quality)
-- `mix recode` (code quality)
-
-If the output is overwhelming, try running one at a time.
-
-## Contributing
-
-Petal Pro is a paid product but we welcome PR's if you find small bugs / typos / improvements. Let us know if you want to contribute in a more significant way and we can offer unlimited membership in return.
+![](screenshot.png)
