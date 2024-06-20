@@ -44,4 +44,4 @@ To see more detail about the process, see the original [article](https://www.tim
 * Return the top 3 documents
 * Generate a LLM response by generating a prompt that includes your search phrase and the contents of the top three documents
 
-![](screenshot.png)
+![](Screenshot.png)
