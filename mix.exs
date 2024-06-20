@@ -86,7 +86,7 @@ defmodule SynaiPro.MixProject do
       {:eqrcode, "~> 0.1.10"},
 
       # OpenAI
-      {:openai, "~> 0.5.2"},
+      {:openai, "~> 0.6.1"},
 
       # Hashing
       {:hashids, "~> 2.0"},
